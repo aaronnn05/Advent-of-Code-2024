@@ -24,10 +24,20 @@ def calculate_total_distance(locations_1, locations_2):
     
     return total_distance
 
+def calculate_similarity_score(locations_1, locations_2):
+    similarity_score = 0
+    for location_1 in locations_1:
+        similarity_score += location_1.ID * \
+            sum(1 for location_2 in locations_2 if location_2.ID == location_1.ID)
+
+    return similarity_score
+
 def main():
     locations_1, locations_2 = init_locations("Day 1 Input.txt")
     total_distance = calculate_total_distance(locations_1, locations_2)
-    print(total_distance)
+    similarity_score = calculate_similarity_score(locations_1, locations_2)
+    print(f"Total distance: {total_distance}")
+    print(f"Similarity score: {similarity_score}")    
 
 if __name__ == "__main__":
     main()
