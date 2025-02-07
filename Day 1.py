@@ -16,7 +16,7 @@ def init_locations(input_file):
 
     return locations_1, locations_2
 
-def total_distance(locations_1, locations_2):
+def calculate_total_distance(locations_1, locations_2):
     total_distance = 0
     for num in range(len(locations_1)):
         pair_distance = abs(locations_1[num].ID - locations_2[num].ID)
@@ -24,5 +24,10 @@ def total_distance(locations_1, locations_2):
     
     return total_distance
 
+def main():
+    locations_1, locations_2 = init_locations("Day 1 input.txt")
+    total_distance = calculate_total_distance(locations_1, locations_2)
+    print(total_distance)
 
-
+if __name__ == "__main__":
+    main()
