@@ -5,7 +5,7 @@ class location:
 def init_locations(input_file):
     locations_1 = []
     locations_2 = []
-    with open("r", input_file) as fileref:
+    with open(input_file, "r") as fileref:
         for line in fileref:
             location_1, location_2 = line.strip().split()
             locations_1.append(location(location_1))
@@ -25,7 +25,7 @@ def calculate_total_distance(locations_1, locations_2):
     return total_distance
 
 def main():
-    locations_1, locations_2 = init_locations("Day 1 input.txt")
+    locations_1, locations_2 = init_locations("Day 1 Input.txt")
     total_distance = calculate_total_distance(locations_1, locations_2)
     print(total_distance)
 
