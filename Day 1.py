@@ -16,3 +16,13 @@ def init_locations(input_file):
 
     return locations_1, locations_2
 
+def total_distance(locations_1, locations_2):
+    total_distance = 0
+    for num in range(len(locations_1)):
+        pair_distance = abs(locations_1[num].ID - locations_2[num].ID)
+        total_distance += pair_distance
+    
+    return total_distance
+
+
+
