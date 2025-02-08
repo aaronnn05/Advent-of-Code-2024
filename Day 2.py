@@ -16,3 +16,13 @@ def check_rules_recursive(report):
         return check_rules_recursive(report[1:])
     else:
         return False
+    
+def analyse_data(reports):
+    return sum(1 if map(check_rules_recursive, report) else 0 for report in reports)
+
+def main():
+    reports = load_reports("Day 2 Input.txt")
+    print(f"Number of safe reports: {analyse_data(reports)}")
+
+if __name__ == "__main__":
+    main()
