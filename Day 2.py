@@ -7,14 +7,10 @@ def load_reports(file_path):
 def check_rules_recursive(report, increasing = True, decreasing = True):
     if len(report) == 1:
         return True
-    elif (report[0] < report[1]) and 1 <= (report[1] - report[0]) <= 3 and increasing:
-        decreasing = False
-        return check_rules_recursive(report[1:], increasing, decreasing)
-    elif (report[0] > report[1]) and 1 <= (report[0] - report[1]) <= 3 and decreasing:
-        increasing = False
-        return check_rules_recursive(report[1:], increasing, decreasing)
-    else:
-        return False
+    diff = report[1] - report[0]
+    if (diff > 0 and increasing or diff < 0 and decreasing) and 1 <= abs(diff) <= 3:
+        return check_rules_recursive(report[1:], diff > 0, diff < 0)
+    return False
     
 def analyse_data(reports):
     return sum(map(check_rules_recursive, reports))
