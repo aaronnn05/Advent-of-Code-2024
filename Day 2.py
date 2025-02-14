@@ -12,8 +12,14 @@ def check_rules_recursive(report, increasing = True, decreasing = True):
         return check_rules_recursive(report[1:], diff > 0, diff < 0)
     return False
     
+def analyse_report(report):
+    if check_rules_recursive(report):
+        return True
+    return any(check_rules_recursive(report[:i] + report[i+1:]) for i in range(len(report)))
+
 def analyse_data(reports):
-    return sum(map(check_rules_recursive, reports))
+    return sum(map(analyse_report, reports))
+    #return sum(any(check_rules_recursive(report[:i] + report[i+1:]) for i in range(len(report))) for report in reports)
 
 def main():
     reports = load_reports("Day 2 Input.txt")
