@@ -4,23 +4,22 @@ def load_reports(file_path):
 
     return reports
 
-def check_rules_recursive(report, report_copy, idx = 0, increasing = True, decreasing = True, damp = False):
+def check_rules_recursive(report, increasing = True, decreasing = True):
     if len(report) == 1:
         return True
     diff = report[1] - report[0]
-    if damp and (diff > 0 and increasing or diff < 0 and decreasing) and 1 <= abs(diff) <= 3: 
-        return check_rules_recursive(report[1:], report_copy, 0, diff > 0, diff < 0, True)
-    elif (diff > 0 and increasing or diff < 0 and decreasing) and 1 <= abs(diff) <= 3:
-        idx += 1
-        return check_rules_recursive(report[1:], report_copy, idx, diff > 0, diff < 0)
-    elif not damp:
-        report_copy_1 = report_copy[:idx] + report_copy[idx+1:]
-        report_copy_2 = report_copy[:idx+1] + report_copy[idx+2:]
-        return check_rules_recursive(report_copy_1, report_copy_1, damp = True) or check_rules_recursive(report_copy_2, report_copy_2, damp = True) 
+    if (diff > 0 and increasing or diff < 0 and decreasing) and 1 <= abs(diff) <= 3:
+        return check_rules_recursive(report[1:], diff > 0, diff < 0)
     return False
     
+def analyse_report(report):
+    if check_rules_recursive(report):
+        return True
+    return any(check_rules_recursive(report[:i] + report[i+1:]) for i in range(len(report)))
+
 def analyse_data(reports):
-    return sum(map(lambda report: check_rules_recursive(report, report), reports))
+    return sum(map(analyse_report, reports))
+    #return sum(any(check_rules_recursive(report[:i] + report[i+1:]) for i in range(len(report))) for report in reports)
 
 def main():
     reports = load_reports("Day 2 Input.txt")
