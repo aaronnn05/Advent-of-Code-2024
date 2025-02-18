@@ -15,8 +15,8 @@ def parse_puzzle(puzzle, variants, idx_lsts, total = 0):
     return total
 
 def main():
-    variants1 = ["XMAS", "SAMX"]
-    variants2 = ["MASMS", "SAMMS", "MASSM", "SAMSM"]
+    variants1 = {"XMAS", "SAMX"}
+    variants2 = {"MASMS", "SAMMS", "MASSM", "SAMSM"}
     idx_lsts1 = [[(0, 0), (0, 1), (0, 2), (0, 3)], #Vertical
                [(0, 0), (1, 0), (2, 0), (3, 0)],  #Horizontal
                [(0, 0), (1, 1), (2, 2), (3, 3)],  #Diagonal
