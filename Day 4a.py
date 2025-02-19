@@ -20,19 +20,28 @@ def parse_puzzle(puzzle, x, y, direction):
             return False
     return True
 
-# return all(
-#     0 <= (sub_y := y + i * dy) < len(puzzle) and  
-#     0 <= (sub_x := x + i * dx) < len(puzzle[0]) and  
-#     puzzle[sub_y][sub_x] == "XMAS"[i]  
-#     for i in range(4))
+    # return all([
+    #     0 <= (sub_y := y + i * dy) < len(puzzle),  might not work tho cuz of IndexError later
+    #     0 <= (sub_x := x + i * dx) < len(puzzle[0]),  
+    #     puzzle[sub_y][sub_x] == "XMAS"[i]
+    #     for i in range(4))]
 
-                    
+def x_mas(puzzle, x, y):
+    if not(1 <= x < len(puzzle) - 1 and 1 <= y < len(puzzle[0]) - 1):
+        return False
+
+    return all([
+    "".join([puzzle[y+1][x-1], puzzle[y][x], puzzle[y-1][x+1]]) in {"SAM", "MAS"},
+    "".join([puzzle[y-1][x-1], puzzle[y][x], puzzle[y+1][x+1]]) in {"SAM", "MAS"}])
+
 def main():
     puzzle = load_puzzle("Day 4 Input.txt")
     xy_directions = generate_directions(puzzle)
     ans1 = sum(parse_puzzle(puzzle, x, y, d) for y in range(len(puzzle)) 
               for x in range(len(puzzle[0])) for d in xy_directions)
+    ans2 = sum(x_mas(puzzle, x, y) for y in range(len(puzzle)) for x in range(len(puzzle[0])))
     print(f"Total XMAS: {ans1}")
+    print(f"Total X-MAS: {ans2}")
 
 if __name__ == "__main__":
     main()
