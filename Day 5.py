@@ -7,12 +7,11 @@ def load_pages(file_path):
         return [line.strip().split(",") for line in file]
     
 def check_rules(rules, update):
-    if len(update) == 1:
-        return True
-    for i in range(len(update)):
-        if (update[i], update[0]) in rules:
-            return False
-    return check_rules(rules, update[1:])
+    return (
+        len(update) == 1
+        or not any((update[i], update[0]) in rules for i in range(len(update)))
+        and check_rules(rules, update[1:])
+    )
 
 def parse_updates(rules, updates):
     return sum(int(update[len(update)//2]) for update in updates if check_rules(rules, update))
